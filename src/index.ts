@@ -1,21 +1,42 @@
 import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
 import {Photo} from "./entity/Photo" 
+import { PhotoMetaData } from "./entity/PhotoMetaData";
 
 AppDataSource.initialize().then(async () => {
 
-    console.log("Inserting a new user into the database...")
-    const user = new User()
-    user.firstName = "Timber"
-    user.lastName = "Saw"
-    user.age = 25
-    await AppDataSource.manager.save(user)
-    console.log("Saved a new user with id: " + user.id)
+  /* const photo = new Photo();
+  photo.name = 'Relationship-photo'
+  photo.description = "Relationship-description"
+  photo.filename = " relationship.png"
+  photo.views = 100
+  photo.isPublished = true
 
-    console.log("Loading users from the database...")
-    const users = await AppDataSource.manager.find(User)
-    console.log("Loaded users: ", users)
+  const photoMetaData = new PhotoMetaData()
+  photoMetaData.height = 10;
+  photoMetaData.width = 10;
+  photoMetaData.orientation = 'vertical'
+  photoMetaData.compressed = false
+  photoMetaData.comment = " Greate Photo"
+  photoMetaData.photo = photo */
 
-    console.log("Here you can setup and run express / fastify / any other framework.")
+  const photoRepository = AppDataSource.getRepository(Photo)
+  const photoMetaDataRepository = AppDataSource.getRepository(PhotoMetaData)
+
+ const metaDataWithPhoto = await photoMetaDataRepository.find({
+   relations:{
+      photo: true
+   }
+ })
+
+ console.log(metaDataWithPhoto)
+
+ const photoWithMetaData = await photoRepository.find({
+   relations:{
+      photoMetaData: true
+   }
+ })
+
+ console.log(photoWithMetaData)
+
 
 }).catch(error => console.log(error))
