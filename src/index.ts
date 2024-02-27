@@ -5,38 +5,43 @@ import { PhotoMetaData } from "./entity/PhotoMetaData";
 AppDataSource.initialize().then(async () => {
 
   /* const photo = new Photo();
-  photo.name = 'Relationship-photo'
+  photo.name = 'new photo'
   photo.description = "Relationship-description"
   photo.filename = " relationship.png"
   photo.views = 100
   photo.isPublished = true
 
   const photoMetaData = new PhotoMetaData()
-  photoMetaData.height = 10;
-  photoMetaData.width = 10;
+  photoMetaData.height = 20;
+  photoMetaData.width = 20;
   photoMetaData.orientation = 'vertical'
   photoMetaData.compressed = false
   photoMetaData.comment = " Greate Photo"
-  photoMetaData.photo = photo */
-
+  
+  
+  photo.photoMetaData = photoMetaData;
+ 
+  
   const photoRepository = AppDataSource.getRepository(Photo)
   const photoMetaDataRepository = AppDataSource.getRepository(PhotoMetaData)
 
- const metaDataWithPhoto = await photoMetaDataRepository.find({
-   relations:{
-      photo: true
-   }
- })
+  const photoSaved = await photoRepository.save(photo); */
 
- console.log(metaDataWithPhoto)
+//  const metaDataWithPhoto = await photoMetaDataRepository.find({
+//    relations:{
+//       photo: true
+//    }
+//  })
 
- const photoWithMetaData = await photoRepository.find({
-   relations:{
-      photoMetaData: true
-   }
- })
+//  console.log(metaDataWithPhoto)
 
- console.log(photoWithMetaData)
+//  const photoWithMetaData = await photoRepository.find({
+//    relations:{
+//       photoMetaData: true
+//    }
+//  })
+
+//  console.log(photoWithMetaData)
 
 
 }).catch(error => console.log(error))
